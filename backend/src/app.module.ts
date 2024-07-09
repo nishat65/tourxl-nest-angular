@@ -30,7 +30,7 @@ import { Customers } from './customers/customers.entity';
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '3600s' },
     }),
     AuthModule,
     GuidesModule,

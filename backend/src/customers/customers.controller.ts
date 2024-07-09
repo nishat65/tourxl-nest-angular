@@ -2,8 +2,10 @@ import {
   Body,
   Controller,
   Get,
+  NotFoundException,
   Post,
   Res,
+  UseGuards,
   UseInterceptors,
   UsePipes,
 } from '@nestjs/common';
@@ -15,6 +17,7 @@ import {
 import { CustomerValidationPipe } from './customers.pipe';
 import { CustomersInterceptor } from './customers.interceptor';
 import { Response } from 'express';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('customers')
 export class CustomersController {
@@ -34,5 +37,13 @@ export class CustomersController {
   @UsePipes(new CustomerValidationPipe(createCustomerSchema))
   create(@Body() body: CreateCustomerDto) {
     return this.customersService.create(body);
+  }
+
+  @Get('/me')
+  @UseGuards(AuthGuard)
+  async findCustomerByEmail(email: string) {
+    const user = await this.customersService.findCustomerByEmail(email);
+    if (!user) throw new NotFoundException('User not found');
+    return user;
   }
 }

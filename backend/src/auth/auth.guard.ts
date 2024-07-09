@@ -13,10 +13,7 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(
-    private jwtService: JwtService,
-    @InjectRepository(Guides) private readonly guide: Repository<Guides>,
-  ) {}
+  constructor(private jwtService: JwtService) {}
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     if (!request.headers.authorization) throw new UnauthorizedException();
@@ -26,21 +23,10 @@ export class AuthGuard implements CanActivate {
       const user = await this.jwtService.verifyAsync(token, {
         secret: process.env.JWT_SECRET,
       });
-      const findUser = await this.guide.findOne({
-        where: { email: user.email },
-      });
-      if (!findUser)
-        throw new UnauthorizedException({
-          message: 'User not found',
-          error: 'Not found',
-          status: 401,
-        });
-      request['user'] = findUser.email;
+      request['user'] = user;
     } catch (error) {
       if (error instanceof JsonWebTokenError)
         throw new UnauthorizedException(error.message);
-      if (error.status === 401)
-        throw new HttpException(error.message, error.error, error.status);
       throw new InternalServerErrorException('Something went wrong!');
     }
     return true;

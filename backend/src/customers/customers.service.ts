@@ -20,4 +20,8 @@ export class CustomersService {
     const newRes = this.customers.create(body);
     return await this.customers.save(newRes);
   }
+
+  async findCustomerByEmail(email: string) {
+    return await this.customers.findOne({ where: { email } });
+  }
 }

@@ -17,4 +17,8 @@ export class GuidesService {
     const newGuide = this.guides.create(body);
     return await this.guides.save(newGuide);
   }
+
+  async findOne(email: string) {
+    return await this.guides.findOne({ where: { email } });
+  }
 }
