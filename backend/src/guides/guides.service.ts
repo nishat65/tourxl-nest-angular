@@ -13,7 +13,8 @@ export class GuidesService {
     return this.guides.find();
   }
 
-  create(body) {
-    return this.guides.save(body);
+  async create(body) {
+    const newGuide = this.guides.create(body);
+    return await this.guides.save(newGuide);
   }
 }

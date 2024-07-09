@@ -3,11 +3,17 @@ import { z } from 'zod';
 export const createGuideSchema = z
   .object({
     firstName: z
-      .string()
+      .string({
+        required_error: 'First name is required',
+        message: 'Not a valid name',
+      })
       .trim()
       .regex(/^[a-zA-Z]+$/, 'Not a valid name'),
     lastName: z
-      .string()
+      .string({
+        required_error: 'Last name is required',
+        message: 'Not a valid name',
+      })
       .trim()
       .regex(/^[a-zA-Z]+$/, 'Not a valid name'),
     phone: z
@@ -19,7 +25,18 @@ export const createGuideSchema = z
         /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/,
         'Not a valid phone number',
       ),
-    email: z.string().email('Not a valid email'),
+    email: z
+      .string({
+        required_error: 'Email is required',
+        message: 'Not a valid email',
+      })
+      .email('Not a valid email'),
+    password: z
+      .string({
+        required_error: 'Password is required',
+        message: 'Password must be at least 6 characters',
+      })
+      .min(6, 'Password must be at least 6 characters'),
     officeAddress: z.string(),
     totalToursDone: z.number().min(0).default(0),
   })

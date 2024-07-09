@@ -9,5 +9,6 @@ import { CustomersInterceptor } from './customers.interceptor';
   imports: [TypeOrmModule.forFeature([Customers])],
   providers: [CustomersService, CustomersInterceptor],
   controllers: [CustomersController],
+  exports: [CustomersInterceptor],
 })
 export class CustomersModule {}

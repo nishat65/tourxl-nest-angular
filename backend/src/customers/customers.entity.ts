@@ -8,6 +8,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+import * as bcrypt from 'bcrypt';
+
 @Entity({ name: 'customers' })
 export class Customers {
   @PrimaryGeneratedColumn()
@@ -86,5 +88,12 @@ export class Customers {
     if (this.firstName) this.firstName = this.firstName.toLowerCase();
     if (this.lastName) this.lastName = this.lastName.toLowerCase();
     if (this.email) this.email = this.email.toLowerCase();
+    if (this.password) {
+      const encryptedPassword = bcrypt.hashSync(
+        this.password,
+        bcrypt.genSaltSync(+process.env.PWD_SALT),
+      );
+      this.password = encryptedPassword;
+    }
   }
 }
