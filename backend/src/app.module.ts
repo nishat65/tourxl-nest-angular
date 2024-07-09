@@ -7,6 +7,8 @@ import { ConfigModule } from '@nestjs/config';
 import { Guides } from './guides/guides.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthModule } from './auth/auth.module';
+import { CustomersModule } from './customers/customers.module';
+import { Customers } from './customers/customers.entity';
 
 @Module({
   imports: [
@@ -22,16 +24,17 @@ import { AuthModule } from './auth/auth.module';
       password: process.env.PGPASSWORD,
       database: process.env.PGDATABASE,
       ssl: true,
-      entities: [Guides],
+      entities: [Guides, Customers],
       synchronize: true,
     }),
-    GuidesModule,
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '60s' },
     }),
     AuthModule,
+    GuidesModule,
+    CustomersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
