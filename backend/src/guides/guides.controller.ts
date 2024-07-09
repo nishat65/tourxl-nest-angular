@@ -15,10 +15,10 @@ import { AuthGuard } from 'src/auth/auth.guard';
 import { CustomersInterceptor } from 'src/customers/customers.interceptor';
 
 @Controller('guides')
-// @UseGuards(AuthGuard)
 export class GuidesController {
   constructor(private readonly guidesService: GuidesService) {}
   @Get()
+  @UseGuards(AuthGuard)
   getAll() {
     return this.guidesService.findAll();
   }

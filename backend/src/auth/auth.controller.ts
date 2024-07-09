@@ -1,14 +1,4 @@
-import {
-  BadRequestException,
-  Body,
-  Controller,
-  HttpCode,
-  InternalServerErrorException,
-  NotFoundException,
-  Post,
-  Res,
-  UsePipes,
-} from '@nestjs/common';
+import { Body, Controller, Post, Res, UsePipes } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { AuthService } from './auth.service';
 import { AuthPipe } from './auth.pipe';
@@ -22,21 +12,39 @@ export class AuthController {
     private readonly jwtService: JwtService,
   ) {}
 
-  @Post('login')
+  @Post('login/guide')
   @UsePipes(new AuthPipe(authSchema))
-  async signIn(@Body() body: authDto, @Res() res: Response) {
-    const user = await this.authService.signIn(body.email);
-    if (!user) throw new NotFoundException('User not found');
+  async signGuideIn(@Body() body: authDto, @Res() res: Response) {
+    const user = await this.authService.signGuideIn(body);
     const token = await this.jwtService.signAsync(
       { email: user.email },
       { secret: process.env.JWT_SECRET },
     );
-    const { email, firstName, lastName, phone, officeAddress } = user;
     return res.status(200).json({
       token,
-      userDetails: { email, firstName, lastName, phone, officeAddress },
+      data: {
+        user,
+      },
       statusCode: 200,
-      message: 'Logged in',
+      message: 'success',
+    });
+  }
+
+  @Post('login/customer')
+  @UsePipes(new AuthPipe(authSchema))
+  async signCustomerIn(@Body() body: authDto, @Res() res: Response) {
+    const customer = await this.authService.signCustomerIn(body);
+    const token = await this.jwtService.signAsync(
+      { email: customer.email },
+      { secret: process.env.JWT_SECRET },
+    );
+    return res.status(200).json({
+      token,
+      data: {
+        customer,
+      },
+      statusCode: 200,
+      message: 'success',
     });
   }
 }
