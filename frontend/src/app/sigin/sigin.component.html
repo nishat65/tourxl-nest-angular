@@ -1,0 +1,37 @@
+<main class="flex">
+  <section class="bg-orange-800 grow-[2] h-[100vh]"></section>
+  <section
+    class="border-emerald-200 grow-[1] border-2 flex justify-center items-center"
+  >
+    <!-- <div>{{ email() }} | {{ password() }}</div> -->
+    <form action="" class="flex flex-col items-center gap-2 w-full">
+      <div class="flex flex-col w-8/12 gap-2">
+        <label for="email" class="text-slate-600">Email</label>
+        <input
+          [(ngModel)]="email"
+          type="text"
+          id="email"
+          name="email"
+          class="border-[1px] border-slate-600 rounded-md outline-none px-3 py-2"
+        />
+      </div>
+      <div class="flex flex-col w-8/12 gap-2">
+        <label for="password" class="text-slate-600">Password</label>
+        <input
+          [(ngModel)]="password"
+          type="text"
+          id="password"
+          name="password"
+          class="border-[1px] border-slate-600 rounded-md outline-none px-3 py-2"
+        />
+      </div>
+      <div class="w-8/12 mt-2">
+        <button
+          class="bg-black text-white py-3 px-2 rounded-[5px] w-full font-bold"
+        >
+          Sign In
+        </button>
+      </div>
+    </form>
+  </section>
+</main>
