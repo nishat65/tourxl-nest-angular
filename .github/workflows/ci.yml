@@ -1,0 +1,31 @@
+name: tour-xl-angular-nest
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Display system info
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const os = require('os')
+            core.setOutput('os', os.type())
+            core.setOutput('node', process.version)
+            core.setOutput('npm', process.versions.npm)
+            core.setOutput('yarn', process.versions.yarn)
+            core.setOutput('npm_config_user_agent', process.versions.npm_config_user_agent)
+            core.setOutput('npm_config_registry', process.versions.npm_config_registry)
