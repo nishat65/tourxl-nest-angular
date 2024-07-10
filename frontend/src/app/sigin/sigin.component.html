@@ -2,7 +2,12 @@
   <section class="bg-orange-800 grow-[2] h-[100vh]"></section>
   <section class="grow-[1] flex justify-center items-center">
     <!-- <div>{{ email() }} | {{ password() }}</div> -->
-    <form action="" class="flex flex-col items-center gap-2 w-full">
+    <form
+      #form="ngForm"
+      action=""
+      class="flex flex-col items-center gap-2 w-full"
+      (ngSubmit)="signIn()"
+    >
       <div class="flex flex-col w-8/12 gap-2">
         <label for="email" class="text-slate-600">Email</label>
         <input
@@ -11,7 +16,20 @@
           id="email"
           name="email"
           class="border-[1px] border-slate-600 rounded-md outline-none px-3 py-2"
+          required="required"
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+          title="Enter a valid email address"
+          #emailVal="ngModel"
         />
+        @if (emailVal.invalid && (emailVal.dirty || emailVal.touched)) {
+        <div>
+          @if (emailVal.hasError('required')) {
+          <div class="text-red-600 font-light text-xs">*Email is required</div>
+          } @if (emailVal.hasError('pattern')) {
+          <div class="text-red-600 font-light text-xs">*Invalid email</div>
+          }
+        </div>
+        }
       </div>
       <div class="flex flex-col w-8/12 gap-2">
         <label for="password" class="text-slate-600">Password</label>
@@ -21,11 +39,42 @@
           id="password"
           name="password"
           class="border-[1px] border-slate-600 rounded-md outline-none px-3 py-2"
+          required="required"
+          minlength="6"
+          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
+          #passwordVal="ngModel"
         />
+        @if (passwordVal.invalid && (passwordVal.dirty || passwordVal.touched))
+        {
+        <div>
+          @if (passwordVal.hasError('required')) {
+          <div class="text-red-600 font-light text-xs">
+            *Password is required
+          </div>
+          } @if (passwordVal.hasError('minlength')) {
+          <div class="text-red-600 font-light text-xs">
+            *Password must be at least 6 characters
+          </div>
+          } @if (passwordVal.hasError('pattern')) {
+          <div class="text-red-600 font-light text-xs">
+            *Password must contain at least one uppercase letter, one lowercase
+            letter, and one number
+          </div>
+          }
+        </div>
+        }
       </div>
+
       <div class="w-8/12 mt-2">
         <button
+          type="submit"
+          [disabled]="!form.form.valid"
           class="bg-black text-white py-3 px-2 rounded-[5px] w-full font-bold"
+          [class]="
+            !form.form.valid
+              ? 'bg-slate-700 cursor-not-allowed'
+              : 'bg-black cursor-pointer'
+          "
         >
           Sign In
         </button>

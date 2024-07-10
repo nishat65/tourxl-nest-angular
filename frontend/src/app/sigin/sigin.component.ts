@@ -19,4 +19,8 @@ export class SiginComponent {
   protected password: WritableSignal<string> = signal('');
 
   ngDoCheck() {}
+
+  signIn() {
+    console.log(this.email(), this.password(), 'submitted');
+  }
 }
