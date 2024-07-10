@@ -1,3 +1,3 @@
 export const environment = {
-  baseUrl: 'https://jsonplaceholder.typicode.com',
+  baseUrl: 'http://localhost:3000/api/v1',
 };

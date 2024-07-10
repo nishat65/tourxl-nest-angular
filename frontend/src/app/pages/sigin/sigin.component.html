@@ -1,8 +1,3 @@
-<app-toast
-  message="Logged in successfully!"
-  [closeable]="false"
-  (close)="closeToast($event)"
-></app-toast>
 <main class="flex">
   <section class="bg-orange-800 grow-[2] h-[100vh]"></section>
   <section class="grow-[1] flex justify-center items-center">
@@ -46,7 +41,6 @@
           class="border-[1px] border-slate-600 rounded-md outline-none px-3 py-2"
           required="required"
           minlength="6"
-          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
           #passwordVal="ngModel"
         />
         @if (passwordVal.invalid && (passwordVal.dirty || passwordVal.touched))
@@ -59,11 +53,6 @@
           } @if (passwordVal.hasError('minlength')) {
           <div class="text-red-600 font-light text-xs">
             *Password must be at least 6 characters
-          </div>
-          } @if (passwordVal.hasError('pattern')) {
-          <div class="text-red-600 font-light text-xs">
-            *Password must contain at least one uppercase letter, one lowercase
-            letter, and one number
           </div>
           }
         </div>
@@ -81,7 +70,7 @@
               : 'bg-black cursor-pointer'
           "
         >
-          Sign In
+          {{ loading() ? "Loading..." : "Sign In" }}
         </button>
       </div>
     </form>
