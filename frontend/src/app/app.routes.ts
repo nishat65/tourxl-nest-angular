@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { SiginComponent } from './sigin/sigin.component';
+import { SiginComponent } from './pages/sigin/sigin.component';
 
 export const routes: Routes = [
   { path: '', component: SiginComponent },
