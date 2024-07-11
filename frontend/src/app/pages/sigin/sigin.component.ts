@@ -37,8 +37,7 @@ export class SiginComponent {
       .subscribe((state) => {
         this.loading.set(state.loading);
         if (state.data) this.showToastMessage(state.data.message, 'success');
-        else if (state.error)
-          this.showToastMessage(state.data.message, 'error');
+        else if (state.error) this.showToastMessage(state.error, 'error');
       });
   }
 }

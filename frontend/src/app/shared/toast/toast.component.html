@@ -2,9 +2,7 @@
   @for (toast of toasts; track $index) {
   <div
     [@slide]="toast.animationState"
-    [class]="
-      getBackgroundColor(toast.type) + ' toast bg-red-400 p-4 rounded-md w-full'
-    "
+    [class]="getBackgroundColor(toast.type) + ' toast p-4 rounded-md w-full'"
   >
     <div class="flex justify-between items-center gap-4">
       <div class="font-bold">{{ toast.title }}</div>

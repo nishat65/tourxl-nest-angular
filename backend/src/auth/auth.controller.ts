@@ -26,7 +26,7 @@ export class AuthController {
         user,
       },
       statusCode: 200,
-      message: 'success',
+      message: 'Login success',
     });
   }
 
@@ -44,7 +44,7 @@ export class AuthController {
         customer,
       },
       statusCode: 200,
-      message: 'success',
+      message: 'Login success',
     });
   }
 }
